@@ -1,17 +1,21 @@
 # Creditcard\_Fraud
 
-This repository contains a deep learning-based approach to detect fraudulent transactions in credit card datasets using a CNN-LSTM hybrid architecture. The model is trained and evaluated on the popular Kaggle dataset for credit card fraud detection.
+This project implements a deep learning pipeline for **credit card fraud detection** using a **hybrid CNN-LSTM model**. It includes comprehensive preprocessing, model training with hyperparameter tuning via Optuna, evaluation with multiple metrics and plots, and model explainability using SHAP. All experiments are based on the **Kaggle Credit Card Fraud Detection Dataset**.
 
-## Project Structure
+---
+
+## 📁 Project Structure
 
 ```
 Creditcard_Fraud/
+│
 ├── EDA/
 │   ├── amount_distribution.png
 │   ├── class_distribution.png
 │   ├── correlation_matrix.png
 │   ├── eda.py
 │   └── eda_summary.txt
+│
 ├── evaluation/
 │   ├── confusion_matrix.png
 │   ├── final_metrics.txt
@@ -19,89 +23,140 @@ Creditcard_Fraud/
 │   ├── roc_curve.png
 │   ├── save_results.py
 │   └── threshold_vs_f1.png
+│
 ├── explainability/
 │   ├── shap_analysis.py
 │   └── shap_summary.png
+│
 ├── preprocessing/
 │   ├── preprocess.py
 │   ├── reshape_for_cnn_lstm.py
 │   └── split_and_smote.py
+│
 ├── training/
 │   ├── final_model.py
 │   ├── generate_cnnlstm_full.py
 │   └── train_cnn_lstm_optuna.py
-├── .gitignore
+│
 ├── LICENSE
 ├── README.md
 └── requirements.txt
 ```
 
-## Description
+---
 
-This project implements a pipeline for:
+## 🚀 Getting Started
 
-* **Exploratory Data Analysis (EDA)**: Understanding class imbalance, transaction amount distribution, and feature correlations.
-* **Preprocessing**: Standardizing data, applying SMOTE for class balancing, and reshaping for CNN-LSTM input.
-* **Model Training**: A hybrid CNN-LSTM model is trained using PyTorch. Hyperparameters are optimized with Optuna.
-* **Evaluation**: Includes confusion matrix, ROC, PRC, F1-threshold optimization, and final performance metrics.
-* **Explainability**: SHAP values are computed to interpret the model's predictions.
+### Prerequisites
 
-## Getting Started
+* Python 3.10+
+* GPU recommended (for training with PyTorch)
 
-### Requirements
-
-Install all necessary packages using:
+### Installation
 
 ```bash
+# Create virtual environment
+python -m venv venv
+source venv/bin/activate  # or venv\Scripts\activate on Windows
+
+# Install requirements
 pip install -r requirements.txt
 ```
 
-### Running the Code
+### Dataset
 
-1. **Run preprocessing:**
+Download the [Credit Card Fraud Detection dataset](https://www.kaggle.com/mlg-ulb/creditcardfraud) and place it in a private `data/` directory (excluded from GitHub).
 
-   ```bash
-   python preprocessing/preprocess.py
-   python preprocessing/split_and_smote.py
-   python preprocessing/reshape_for_cnn_lstm.py
-   ```
+---
 
-2. **Train model with Optuna tuning:**
+## 🧹 Pipeline Overview
 
-   ```bash
-   python training/train_cnn_lstm_optuna.py
-   ```
+### 1. Preprocessing
 
-3. **Train final model:**
+* File: `preprocessing/preprocess.py`
+* Normalizes and scales features, drops irrelevant columns
 
-   ```bash
-   python training/generate_cnnlstm_full.py
-   python training/final_model.py
-   ```
+### 2. SMOTE Balancing & Splitting
 
-4. **Run evaluation and visualization:**
+* File: `preprocessing/split_and_smote.py`
+* Applies SMOTE to training data and splits into train/val/test
 
-   ```bash
-   python evaluation/save_results.py
-   ```
+### 3. Reshaping for CNN-LSTM
 
-5. **Run SHAP analysis (optional):**
+* File: `preprocessing/reshape_for_cnn_lstm.py`
+* Reshapes data into sequences for hybrid model
 
-   ```bash
-   python explainability/shap_analysis.py
-   ```
+### 4. Training with Optuna
 
-## Results
+* File: `training/train_cnn_lstm_optuna.py`
+* Optimizes hyperparameters
 
-* **ROC AUC**: 0.97
-* **PRC AUC**: 0.81
-* **Best F1 Threshold**: 0.48
-* **Confusion Matrix**: Excellent fraud detection with very few false negatives
+### 5. Final Model Training
 
-## License
+* File: `training/final_model.py`
+* Trains with best parameters on full training data
 
-MIT License
+---
 
-## Author
+## 📊 Results
 
-Angelos Moulas
+Metrics based on best CNN–LSTM model:
+
+```
+Accuracy      : 1.00
+F1 Score      : 0.8394
+ROC AUC       : 0.9651
+PRC AUC       : 0.8093
+
+Classification Report:
+              precision    recall  f1-score   support
+
+           0       1.00      1.00      1.00     56864
+           1       0.85      0.83      0.84        98
+
+    accuracy                           1.00     56962
+   macro avg       0.93      0.91      0.92     56962
+weighted avg       1.00      1.00      1.00     56962
+```
+
+---
+
+## 📈 Visualizations
+
+Located in `EDA/`, `evaluation/`, and `explainability/`:
+
+* Confusion matrix
+* ROC curve, PRC curve
+* SHAP feature importance
+* Threshold vs F1
+* Distribution plots
+* Correlation heatmap
+
+---
+
+## 🧠 Explainability
+
+* File: `explainability/shap_analysis.py`
+* Uses SHAP to show feature impact on CNN-LSTM predictions
+
+---
+
+## 📄 License
+
+This project is open-source under the MIT License.
+
+---
+
+## 👨‍💻 Author
+
+**Angelos Moulas**
+MSc in Data Science & Society
+Tilburg University
+
+Feel free to ⭐ the repository if you find it helpful!
+
+---
+
+## 📬 Contact
+
+For questions or feedback, open an issue or contact via [GitHub](https://github.com/Amoulas55).
